@@ -53,7 +53,17 @@ public class RandomAccessMemoryTest
         randomMemory.close();
         assertTrue( randomMemory.getReadIndex() == 0L );
         assertTrue( randomMemory.getWriteIndex() == 0L );
+    }
 
+    public void testPerformance() {
+        RandomAccess randomMemory = new RandomAccessMemory();
+
+        final long MAX = 34359738368L;
+        for( long i=0; i<MAX; i++ ) {
+//            if( i %1000 == 0)
+//                System.out.println(i);
+            randomMemory.writeLong(i);
+        }
 
     }
 }

@@ -8,14 +8,14 @@ import java.util.Arrays;
  * Time: 9:05 PM
  */
 public class IntArray implements Swappable {
-    private static final long MAXMEM= 8589934592L;
+    private static final long MAXMEM= 8589934592L; // 8 GiB
     private static final int TYPELEN = 4;
     private static final int BLOCKBITS = 18;
-    private static final int BLOCKSIZE = 262144;
+    private static final int BLOCKSIZE = 262144; // 256 KiB
     private static final int BLOCKMASK = 262143;
 
     private static final int SLOTSIZE = 8192;
-    public static final int NOTFOUND = -2147483648;
+    public static final int NOTFOUND = -2147483648; // 0x80000000
     public static final int NULLVALUE = -2147283648;
 
     private int maxIdx = -1;
@@ -146,7 +146,9 @@ public class IntArray implements Swappable {
     }
 
     /**
-     * Find if value is in array and return index where it's held
+     * Find if value is in array and return index where it's held.
+     * Uses binarySearch if sorted
+     *
      * @param searchValue
      * @return
      */
@@ -170,7 +172,9 @@ public class IntArray implements Swappable {
     }
 
     /**
-     * Find all searchValue in slots, put and return them as array
+     * Find all searchValue in slots
+     * put matching indexes into array
+     * and return array
      *
      * @param searchValue
      * @return
@@ -201,19 +205,29 @@ public class IntArray implements Swappable {
             return retArr;
         }
 
+        // start with 10 elements max, increase as needed later
         int[] retArr = new int[10];
         int retArrSize = 0;
+
+        // not sorted, iterate through every array element
         for( int i=0; i<= this.maxIdx; i++ ) {
             if( searchValue == get(i) ) {
                 if( retArrSize == retArr.length ) {
+
+                    // array full, increase capacity 2x
                     retArr = Arrays.copyOf( retArr, retArr.length * 2 );
                 }
-                retArr[ (retArrSize++) ] = 1;
+
+                // save index of matched value
+                retArr[ (retArrSize++) ] = i;
             }
         }
+
+        // nothing found
         if( retArrSize == 0 )
             return null;
 
+        // return cloned array to be safe
         return Arrays.copyOf( retArr, retArrSize);
     }
 
