@@ -41,8 +41,8 @@ public class IntArrayTest
         intArray.push(22222);
         intArray.set(3, 33);
         intArray.set(4, 33);
-        assertTrue( intArray.getSize() == 5 );
-        assertTrue( intArray.get(0) == 1 );
+        assertTrue(intArray.getSize() == 5);
+        assertTrue(intArray.get(0) == 1);
         assertTrue( intArray.get(1) == 1000 );
         assertTrue( intArray.get(3) == 33 );
 
@@ -68,13 +68,23 @@ public class IntArrayTest
         assertTrue( intArray.get(3) == 1000);
         assertTrue( intArray.get(4) == 22222);
 
-
-
         // test #clear
         intArray.clear();
         assertTrue( intArray.contains(1000) == false );
         assertTrue( intArray.getSize() == 0 );
+    }
 
+    public void testPerformance() {
+        IntArray intArray = new IntArray();
+        final long MAX = 8589934592L/4;
+
+        for( long i=0; i<MAX; i++ ) {
+
+            if( i % 1000 == 0 )
+                System.out.println(i);
+
+            intArray.push( (int)i );
+        }
     }
 
 }

@@ -8,7 +8,7 @@ package routingOsm.primitives;
 public class IntIntBag {
     private IntArray values = new IntArray();
     private IntArray keys = new IntArray( this.values );
-    public static final int NULLVALUE = -2147483648;
+    public static final int NULLVALUE = -2147483648;  // 0x8000 0000
     private int size;
 
     public int getSize() { return this.size; }
